@@ -1,4 +1,5 @@
 body {
+
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
@@ -10,4 +11,28 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.Day { 
+  float:  left;
+}
+
+.Hour {
+  width:  200px ; 
+  height:  30px ; 
+  border : 1px solid green ;
+  background-color: aqua;
+
+  user-select:none;
+}
+
+
+.Hour:hover {
+  background-color:  pink !important ;
+  border: 1px solid orange
+}
+
+.HourSeleted { 
+  background-color:  pink !important ;
+  border: 1px solid orange
 }
