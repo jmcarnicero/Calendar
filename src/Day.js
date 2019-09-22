@@ -1,24 +1,36 @@
 import React, { Component } from "react";
+import moment from "moment";
 import Hour from "./Hour";
 
 export class Day extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { hours_start: 0, hours_end: 24 };
-  }
-
   renderHours = () => {
     const Hours = [];
+    const b = moment(this.props.day).add(1, "day");
 
-    for (let i = this.state.hours_start; i < this.state.hours_end; i++) {
+    for (
+      var m = moment(this.props.day);
+      m.diff(b, "hour") <= 0;
+      m.add(1, "hour")
+    ) {
+      let selected = "";
+
+      if (this.props.hourEnd > this.props.hourStart) {
+        if (m.isBetween(this.props.hourStart, this.props.hourEnd, null, "[]")) {
+          selected = "HourSeleted";
+        }
+      } else {
+        if (m.isBetween(this.props.hourEnd, this.props.hourStart, null, "[]")) {
+          selected = "HourSeleted";
+        }
+      }
+
       Hours.push(
         <Hour
-          key={i}
-          day={this.props.day}
-          hour={i}
-          hours={this.props.hours}
-          setStartDay={(day, hour) => this.props.setStartDay(day, hour)}
-          setEndtDay={(day, hour) => this.props.setEndtDay(day, hour)}
+          key={m.format("YYYY-MM-DDTHH:mm")}
+          hour={m.format("YYYY-MM-DDTHH:mm")}
+          setStartDay={hour => this.props.setStartDay(hour)}
+          setEndtDay={hour => this.props.setEndtDay(hour)}
+          selected={selected}
         />
       );
     }
@@ -27,10 +39,9 @@ export class Day extends Component {
   };
 
   render() {
-
     return (
-      <div className={this.props.className}>
-        <h1>Day : {this.props.day}</h1>
+      <div className={`Day `}>
+        <h2>Day : {moment(this.props.day).format("YYYY-MM-DD")}</h2>
         {this.renderHours()}
       </div>
     );

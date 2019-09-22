@@ -1,38 +1,40 @@
 import React, { Component } from "react";
+import moment from "moment";
 
 export class Hour extends Component {
   constructor(props) {
-    super(props);
+    super(props)
+    this.state = { flag: false };
   }
-
   onMouseUpHandler = e => {
-    this.props.setStartDay(this.props.day, Number(e.target.id));
+    console.log("onMouseUpHandler", e.target.id);
+    this.setState({ flag: false });
+    this.props.setStartDay(e.target.id);
   };
 
   onMouseDownHandler = e => {
-    this.props.setEndtDay(this.props.day, Number(e.target.id));
+    console.log("onMouseDownHandler", e.target.id);
+    this.setState({ flag: true });
+    this.props.setEndtDay(e.target.id);
+  };
+
+  onEnterHandler = e => {
+    console.log("onEnterHandler", e.target.id , this.state );
+    // if (this.state.flag) {
+    //   this.props.setStartDay(e.target.id);
+    // }
   };
 
   render = () => {
-    let classNameSelected = "";
-
-    if (this.props.hours.length > 0) {
-      if (
-        this.props.hour >= this.props.hours[0] &&
-        this.props.hour <= this.props.hours[1]
-      ) {
-        classNameSelected = "HourSeleted";
-      }
-    }
-
     return (
       <div
         id={this.props.hour}
-        className={`Hour ${classNameSelected}`}
+        className={`Hour ${this.props.selected}`}
         onMouseUp={this.onMouseUpHandler}
         onMouseDown={this.onMouseDownHandler}
+        onMouseEnter={this.onEnterHandler}
       >
-        {this.props.hour}
+        {moment(this.props.hour).format("HH:mm")}
       </div>
     );
   };
