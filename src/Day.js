@@ -3,6 +3,25 @@ import moment from "moment";
 import Hour from "./Hour";
 
 export class Day extends Component {
+  onMouseUpHandler = e => {
+    this.props.setStartDay(e.target.id);
+  };
+
+  onMouseDownHandler = e => {
+    this.props.setEndtDay(e.target.id);
+    this.props.setStartDay(e.target.id);
+  };
+
+  
+  onMouseEnterHandler = e => {
+    if( e.buttons ) { 
+      console.log('e', e, e.buttons);
+      this.props.setStartDay(e.target.id);
+    }
+  };
+
+  
+
   renderHours = () => {
     const Hours = [];
     const b = moment(this.props.day).add(1, "day");
@@ -25,13 +44,27 @@ export class Day extends Component {
       }
 
       Hours.push(
-        <Hour
-          key={m.format("YYYY-MM-DDTHH:mm")}
-          hour={m.format("YYYY-MM-DDTHH:mm")}
-          setStartDay={hour => this.props.setStartDay(hour)}
-          setEndtDay={hour => this.props.setEndtDay(hour)}
-          selected={selected}
-        />
+        <div
+        key={m.format("YYYY-MM-DDTHH")}
+          onMouseUp={e => {
+            this.onMouseUpHandler(e);
+          }}
+          onMouseDown={e => {
+            this.onMouseDownHandler(e);
+          }}          
+          
+          onMouseOver={e => {
+            this.onMouseEnterHandler(e);
+          }}          
+        >
+          <Hour
+            key={m.format("YYYY-MM-DDTHH:mm")}
+            hour={m.format("YYYY-MM-DDTHH:mm")}
+            setDateStart={hour => this.props.setStartDay(hour)}
+            setDateEnd={hour => this.props.setEndtDay(hour)}
+            selected={selected}
+          />
+        </div>
       );
     }
 

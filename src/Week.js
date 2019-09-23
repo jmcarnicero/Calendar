@@ -20,12 +20,8 @@ export class Week extends Component {
     };
   }
 
-  setStartDayHandler = hour => {
-    this.setState({ hourEnd: hour });
-  };
-
-  setEndtDayHandler = hour => {
-    this.setState({ hourStart: hour });
+  setDayHandler = (param, hour) => {
+    this.setState({ [param]: hour });
   };
 
   renderDays = () => {
@@ -40,8 +36,8 @@ export class Week extends Component {
         <Day
           key={m.format("YYYY-MM-DDTHH:mm")}
           day={m.format("YYYY-MM-DDTHH:mm")}
-          setStartDay={hour => this.setStartDayHandler(hour)}
-          setEndtDay={hour => this.setEndtDayHandler(hour)}
+          setEndtDay={hour => this.setDayHandler("hourEnd", hour)}
+          setStartDay={hour => this.setDayHandler("hourStart", hour)}
           hourStart={this.state.hourStart}
           hourEnd={this.state.hourEnd}
         />
